@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hồ sơ cá nhân Edupress - Cập nhật thông tin, đổi mật khẩu và quản lý tài khoản.">
+  <title>Hồ sơ cá nhân - Edupress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <div id="header-placeholder"></div>
+
+  <main id="main-content" role="main">
+    <div class="container" style="padding-top: 32px; padding-bottom: 48px;">
+      <div id="profile-content">
+        <div class="empty-state" style="grid-column: 1 / -1;">
+          <div class="empty-state-icon">⏳</div>
+          <h3 class="empty-state-title">Đang tải hồ sơ...</h3>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Utils.onReady(() => {
+      if (!Auth.requireAuth()) return;
+
+      const user = Auth.currentUser;
+      const enrollments = Storage.getEnrollments(user.id);
+
+      const container = Utils.getElement('#profile-content');
+      container.innerHTML = `
+        <div class="profile-header">
+          <div class="profile-avatar" style="font-size: 48px;">${user.avatar || Utils.getInitials(user.name)}</div>
+          <h1 class="profile-name">${Utils.escapeHtml(user.name)}</h1>
+          <p class="profile-email">${Utils.escapeHtml(user.email)}</p>
+          <p style="margin-top: 8px; color: var(--text-muted); font-size: 14px;">
+            Thành viên منذ ${Utils.formatDate(user.createdAt)}
+            ${user.role === 'admin' ? ' • <span class="badge badge-new">Quản trị viên</span>' : ''}
+          </p>
+        </div>
+
+        <div class="grid grid-2" style="gap: 32px; align-items: start;">
+          <div>
+            <section class="dashboard-card" style="margin-bottom: 24px;">
+              <h2 class="dashboard-card-title">Thông tin cá nhân</h2>
+              <form id="profile-form">
+                <div class="form-group">
+                  <label for="profile-name" class="form-label">Họ và tên</label>
+                  <input type="text" id="profile-name" class="form-input" value="${Utils.escapeHtml(user.name)}" required>
+                </div>
+                <div class="form-group">
+                  <label for="profile-email" class="form-label">Email</label>
+                  <input type="email" id="profile-email" class="form-input" value="${Utils.escapeHtml(user.email)}" required disabled>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Email không thể thay đổi</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Avatar</label>
+                  <div class="avatar-selector" role="radiogroup" aria-label="Chọn avatar">
+                    ${['👤', '👨‍🎓', '👩‍🎓', '🧑‍💻', '🎨', '📚', '🚀', '⭐', '💡', '🌟', '🎯', '🔥'].map(avatar => `
+                      <button type="button" class="avatar-option ${user.avatar === avatar ? 'selected' : ''}" data-avatar="${avatar}" role="radio" aria-checked="${user.avatar === avatar}">${avatar}</button>
+                    `).join('')}
+                  </div>
+                  <input type="hidden" id="avatar-input" value="${user.avatar || '👤'}">
+                </div>
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+              </form>
+            </section>
+
+            <section class="dashboard-card">
+              <h2 class="dashboard-card-title">Đổi mật khẩu</h2>
+              <form id="password-form">
+                <div class="form-group">
+                  <label for="current-password" class="form-label">Mật khẩu hiện tại</label>
+                  <input type="password" id="current-password" class="form-input" required autocomplete="current-password">
+                </div>
+                <div class="form-group">
+                  <label for="new-password" class="form-label">Mật khẩu mới</label>
+                  <input type="password" id="new-password" class="form-input" required autocomplete="new-password" minlength="6">
+                  <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Ít nhất 6 ký tự</p>
+                </div>
+                <div class="form-group">
+                  <label for="confirm-new-password" class="form-label">Xác nhận mật khẩu mới</label>
+                  <input type="password" id="confirm-new-password" class="form-input" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn btn-secondary">Đổi mật khẩu</button>
+              </form>
+            </section>
+          </div>
+
+          <div>
+            <section class="dashboard-card" style="margin-bottom: 24px;">
+              <h2 class="dashboard-card-title">Thống kê học tập</h2>
+              <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="stat-card">
+                  <div class="stat-value">${enrollments.length}</div>
+                  <div class="stat-label">Khóa học đã đăng ký</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-value">${enrollments.filter(e => e.progress >= 100).length}</div>
+                  <div class="stat-label">Đã hoàn thành</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-value">${enrollments.filter(e => e.progress > 0 && e.progress < 100).length}</div>
+                  <div class="stat-label">Đang học</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-value">${enrollments.reduce((sum, e) => sum + e.progress, 0)}%</div>
+                  <div class="stat-label">Tổng tiến độ</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="dashboard-card">
+              <h2 class="dashboard-card-title">Vùng nhớ trình duyệt</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 14px;">
+                Dữ liệu demo được lưu trữ trong localStorage của trình duyệt. Các thao tác dưới đây chỉ ảnh hưởng đến trình duyệt hiện tại.
+              </p>
+              <div class="flex gap-8" style="flex-wrap: wrap;">
+                <button class="btn btn-outline" id="clear-data-btn">Xóa dữ liệu demo</button>
+                <button class="btn btn-danger" id="reset-demo-btn">Khôi phục mặc định</button>
+              </div>
+            </section>
+
+            <section class="dashboard-card" style="background: #fef2f2; border-color: #fecaca;">
+              <h2 class="dashboard-card-title" style="color: var(--danger-color);">⚠️ Lưu ý quan trọng</h2>
+              <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 20px;">
+                <li>Đây là bản demo học tập, <strong>không phải hệ thống xác thực an toàn</strong> để triển khai thực tế.</li>
+                <li>Mật khẩu được lưu dưới dạng plain text trong localStorage - <strong>không sử dụng mật khẩu thật</strong>.</li>
+                <li>Dữ liệu chỉ lưu trên trình duyệt này, không đồng bộ giữa thiết bị.</li>
+                <li>Không có hệ thống thanh toán thực - các giao dịch đều được mô phỏng.</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      `;
+
+      bindProfileEvents();
+    });
+
+    function bindProfileEvents() {
+      const profileForm = Utils.getElement('#profile-form');
+      if (profileForm) {
+        profileForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = Utils.getElement('#profile-name').value.trim();
+          const avatar = Utils.getElement('#avatar-input').value;
+
+          if (!name) {
+            Utils.showToast('Vui lòng nhập họ và tên', 'error');
+            return;
+          }
+
+          const result = Auth.updateProfile({ name, avatar });
+          if (result) {
+            Utils.showToast('Cập nhật hồ sơ thành công', 'success');
+          }
+        });
+      }
+
+      const passwordForm = Utils.getElement('#password-form');
+      if (passwordForm) {
+        passwordForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const currentPassword = Utils.getElement('#current-password').value;
+          const newPassword = Utils.getElement('#new-password').value;
+          const confirmPassword = Utils.getElement('#confirm-new-password').value;
+
+          if (newPassword !== confirmPassword) {
+            Utils.showToast('Mật khẩu xác nhận không khớp', 'error');
+            return;
+          }
+
+          const result = Auth.changePassword(currentPassword, newPassword);
+          if (result.success) {
+            passwordForm.reset();
+          } else {
+            Utils.showToast(result.message, 'error');
+          }
+        });
+      }
+
+      const clearDataBtn = Utils.getElement('#clear-data-btn');
+      if (clearDataBtn) {
+        clearDataBtn.addEventListener('click', () => {
+          Utils.showConfirm('Bạn có chắc muốn xóa tất cả dữ liệu demo (đăng ký, tiến độ, yêu thích)?', () => {
+            Storage.clear();
+            Utils.showToast('Đã xóa dữ liệu demo', 'success');
+            setTimeout(() => window.location.reload(), 1000);
+          });
+        });
+      }
+
+      const resetDemoBtn = Utils.getElement('#reset-demo-btn');
+      if (resetDemoBtn) {
+        resetDemoBtn.addEventListener('click', () => {
+          Utils.showConfirm('Khôi phục toàn bộ dữ liệu về trạng thái ban đầu?', () => {
+            Storage.resetDemoData();
+          });
+        });
+      }
+
+      Utils.getElements('.avatar-option').forEach(option => {
+        option.addEventListener('click', () => {
+          Utils.getElements('.avatar-option').forEach(o => {
+            Utils.removeClass(o, 'selected');
+            o.setAttribute('aria-checked', 'false');
+          });
+          Utils.addClass(option, 'selected');
+          option.setAttribute('aria-checked', 'true');
+          Utils.getElement('#avatar-input').value = option.dataset.avatar;
+        });
+      });
+    }
+  </script>
+</body>
+</html>

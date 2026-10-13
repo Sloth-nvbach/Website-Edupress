@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Danh sách khóa học Edupress - Tìm kiếm, lọc và sắp xếp khóa học theo danh mục, cấp độ, giá cả và ưu đãi.">
+  <title>Khóa học - Edupress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <div id="header-placeholder"></div>
+
+  <main id="main-content" role="main">
+    <section class="section" style="padding-top: 40px; padding-bottom: 20px;">
+      <div class="container">
+        <h1 class="section-title" style="margin-bottom: 8px;">Tất cả khóa học</h1>
+        <p class="section-subtitle">Tìm khóa học phù hợp với mục tiêu và ngân sách của bạn</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="filter-bar" role="search" aria-label="Bộ lọc khóa học">
+          <div class="filter-group" style="flex: 2; min-width: 250px;">
+            <label for="search-input" class="filter-label">Tìm kiếm</label>
+            <input type="search" id="search-input" class="form-input search-input" placeholder="Tìm khóa học, giảng viên, danh mục..." aria-label="Tìm kiếm khóa học">
+          </div>
+
+          <div class="filter-group">
+            <label for="category-filter" class="filter-label">Danh mục</label>
+            <select id="category-filter" class="form-input filter-select" aria-label="Lọc theo danh mục">
+              <option value="">Tất cả danh mục</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="level-filter" class="filter-label">Cấp độ</label>
+            <select id="level-filter" class="form-input filter-select" aria-label="Lọc theo cấp độ">
+              <option value="">Tất cả cấp độ</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="price-filter" class="filter-label">Loại khóa học</label>
+            <select id="price-filter" class="form-input filter-select" aria-label="Lọc theo loại khóa học">
+              <option value="">Tất cả</option>
+              <option value="free">Miễn phí</option>
+              <option value="paid">Trả phí</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="promotion-filter" class="filter-label">Ưu đãi</label>
+            <select id="promotion-filter" class="form-input filter-select" aria-label="Lọc theo ưu đãi">
+              <option value="">Tất cả</option>
+              <option value="on-sale">Đang giảm giá</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="sort-filter" class="filter-label">Sắp xếp</label>
+            <select id="sort-filter" class="form-input filter-select" aria-label="Sắp xếp kết quả">
+              <option value="default">Mặc định</option>
+              <option value="name-asc">Tên A-Z</option>
+              <option value="name-desc">Tên Z-A</option>
+              <option value="price-asc">Giá thấp đến cao</option>
+              <option value="price-desc">Giá cao đến thấp</option>
+              <option value="newest">Mới nhất</option>
+            </select>
+          </div>
+
+          <button id="clear-filters" class="btn btn-outline" style="height: fit-content; margin-bottom: 2px;">Xóa bộ lọc</button>
+        </div>
+
+        <div id="results-info" class="text-secondary" style="margin-bottom: 16px;" aria-live="polite"></div>
+
+        <div class="grid grid-3" id="courses-grid" role="list" aria-label="Danh sách khóa học"></div>
+
+        <nav class="pagination" id="pagination" aria-label="Phân trang"></nav>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/courses.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Utils.onReady(() => {
+      const params = Utils.getUrlParams();
+      const initialFilters = {};
+
+      if (params.category) initialFilters.category = params.category;
+      if (params.level) initialFilters.level = params.level;
+      if (params.price) initialFilters.priceType = params.price;
+      if (params.promotion) initialFilters.promotion = params.promotion;
+      if (params.search) initialFilters.search = params.search;
+      if (params.sort) initialFilters.sort = params.sort;
+
+      const searchInput = Utils.getElement('#search-input');
+      if (searchInput && params.search) {
+        searchInput.value = params.search;
+      }
+
+      Courses.init(initialFilters);
+    });
+  </script>
+</body>
+</html>

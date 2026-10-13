@@ -1,0 +1,213 @@
+[
+  {
+    "id": "c01",
+    "title": "Lập trình Web cơ bản với HTML, CSS, JS",
+    "description": "Khóa học nhập môn giúp bạn xây dựng website đầu tiên với HTML5, CSS3 và JavaScript thuần.",
+    "category": "Lập trình",
+    "level": "Cơ bản",
+    "thumbnail": "assets/images/course-html.svg",
+    "sponsorId": "sp01",
+    "instructor": "Nguyễn Văn An",
+    "duration": "20 giờ",
+    "price": 499000,
+    "originalPrice": 499000,
+    "isFree": false,
+    "featured": true,
+    "promotionIds": ["pr01"],
+    "lessons": [
+      { "id": "c01-l1", "title": "Giới thiệu khóa học", "content": "Tổng quan về khóa học và cách học hiệu quả.", "video": "https://www.youtube.com/embed/dD2EISBDjWM" },
+      { "id": "c01-l2", "title": "HTML cơ bản", "content": "Các thẻ HTML thường dùng: tiêu đề, đoạn văn, danh sách, liên kết, hình ảnh.", "video": "https://www.youtube.com/embed/ok-plXXHlWw" },
+      { "id": "c01-l3", "title": "CSS cơ bản", "content": "Selector, màu sắc, font chữ, box model.", "video": "https://www.youtube.com/embed/1Rs2ND1ryYc" },
+      { "id": "c01-l4", "title": "JavaScript cơ bản", "content": "Biến, hàm, điều kiện, vòng lặp và xử lý sự kiện DOM.", "video": "https://www.youtube.com/embed/W6NZfCO5SIk" },
+      { "id": "c01-l5", "title": "Bài tập tổng hợp: Xây dựng trang web đầu tiên", "content": "Áp dụng kiến thức để dựng một trang giới thiệu cá nhân.", "video": "https://www.youtube.com/embed/dD2EISBDjWM" }
+    ]
+  },
+  {
+    "id": "c02",
+    "title": "JavaScript nâng cao",
+    "description": "Đi sâu vào closure, prototype, async/await và các kỹ thuật JavaScript hiện đại.",
+    "category": "Lập trình",
+    "level": "Nâng cao",
+    "thumbnail": "assets/images/course-js.svg",
+    "sponsorId": "sp01",
+    "instructor": "Trần Minh Đức",
+    "duration": "25 giờ",
+    "price": 799000,
+    "originalPrice": 799000,
+    "isFree": false,
+    "featured": true,
+    "promotionIds": [],
+    "lessons": [
+      { "id": "c02-l1", "title": "Scope và Closure", "content": "Hiểu rõ phạm vi biến và closure trong JavaScript.", "video": "https://www.youtube.com/embed/PoRJizFvM7s" },
+      { "id": "c02-l2", "title": "Prototype và kế thừa", "content": "Cơ chế prototype chain và kế thừa trong JavaScript.", "video": "https://www.youtube.com/embed/PoRJizFvM7s" },
+      { "id": "c02-l3", "title": "Asynchronous: Promise và Async/Await", "content": "Xử lý bất đồng bộ với Promise và async/await.", "video": "https://www.youtube.com/embed/PoRJizFvM7s" },
+      { "id": "c02-l4", "title": "ES6+ nâng cao", "content": "Destructuring, spread, modules và các tính năng mới.", "video": "https://www.youtube.com/embed/PoRJizFvM7s" }
+    ]
+  },
+  {
+    "id": "c03",
+    "title": "Python cho người mới bắt đầu",
+    "description": "Học Python từ con số 0: cú pháp cơ bản, cấu trúc dữ liệu và lập trình hướng đối tượng.",
+    "category": "Lập trình",
+    "level": "Cơ bản",
+    "thumbnail": "assets/images/course-python.svg",
+    "sponsorId": "sp01",
+    "instructor": "Lê Thu Hà",
+    "duration": "18 giờ",
+    "price": 0,
+    "originalPrice": 0,
+    "isFree": true,
+    "featured": false,
+    "promotionIds": [],
+    "lessons": [
+      { "id": "c03-l1", "title": "Cài đặt và chạy chương trình Python đầu tiên", "content": "Cài Python, viết chương trình Hello World.", "video": "https://www.youtube.com/embed/K5KVEU3aaeQ" },
+      { "id": "c03-l2", "title": "Biến và kiểu dữ liệu", "content": "Số, chuỗi, danh sách, từ điển trong Python.", "video": "https://www.youtube.com/embed/K5KVEU3aaeQ" },
+      { "id": "c03-l3", "title": "Vòng lặp và điều kiện", "content": "if/else, for, while và cách kết hợp.", "video": "https://www.youtube.com/embed/K5KVEU3aaeQ" }
+    ]
+  },
+  {
+    "id": "c04",
+    "title": "ReactJS từ cơ bản đến thực chiến",
+    "description": "Xây dựng ứng dụng web hiện đại với ReactJS: component, state, hooks và routing.",
+    "category": "Lập trình",
+    "level": "Trung bình",
+    "thumbnail": "assets/images/course-react.svg",
+    "sponsorId": "sp01",
+    "instructor": "Nguyễn Văn An",
+    "duration": "30 giờ",
+    "price": 999000,
+    "originalPrice": 999000,
+    "isFree": false,
+    "featured": true,
+    "promotionIds": ["pr01"],
+    "lessons": [
+      { "id": "c04-l1", "title": "Giới thiệu React và JSX", "content": "React là gì, cách hoạt động và cú pháp JSX.", "video": "https://www.youtube.com/embed/Tn6-PIqc4UM" },
+      { "id": "c04-l2", "title": "Component và Props", "content": "Chia nhỏ giao diện thành các component tái sử dụng.", "video": "https://www.youtube.com/embed/Tn6-PIqc4UM" },
+      { "id": "c04-l3", "title": "State và Hooks", "content": "useState, useEffect và quản lý trạng thái.", "video": "https://www.youtube.com/embed/Tn6-PIqc4UM" },
+      { "id": "c04-l4", "title": "Dự án thực hành: Todo App", "content": "Xây dựng ứng dụng quản lý công việc hoàn chỉnh.", "video": "https://www.youtube.com/embed/Tn6-PIqc4UM" }
+    ]
+  },
+  {
+    "id": "c05",
+    "title": "Thiết kế UI/UX với Figma",
+    "description": "Học thiết kế giao diện và trải nghiệm người dùng chuyên nghiệp bằng Figma.",
+    "category": "Thiết kế",
+    "level": "Cơ bản",
+    "thumbnail": "assets/images/course-figma.svg",
+    "sponsorId": "sp02",
+    "instructor": "Phạm Ngọc Lan",
+    "duration": "15 giờ",
+    "price": 599000,
+    "originalPrice": 599000,
+    "isFree": false,
+    "featured": true,
+    "promotionIds": ["pr02"],
+    "lessons": [
+      { "id": "c05-l1", "title": "Làm quen với Figma", "content": "Giao diện Figma và các công cụ cơ bản.", "video": "https://www.youtube.com/embed/FTFaQWZBqQ8" },
+      { "id": "c05-l2", "title": "Nguyên tắc thiết kế UI", "content": "Màu sắc, typography, bố cục và khoảng trắng.", "video": "https://www.youtube.com/embed/FTFaQWZBqQ8" },
+      { "id": "c05-l3", "title": "Xây dựng Design System", "content": "Tạo component và style guide nhất quán.", "video": "https://www.youtube.com/embed/FTFaQWZBqQ8" }
+    ]
+  },
+  {
+    "id": "c06",
+    "title": "Photoshop căn bản",
+    "description": "Khóa học miễn phí giúp bạn làm quen với Photoshop: cắt ghép, chỉnh màu, thiết kế banner.",
+    "category": "Thiết kế",
+    "level": "Cơ bản",
+    "thumbnail": "assets/images/course-photoshop.svg",
+    "sponsorId": "sp02",
+    "instructor": "Đỗ Hải Nam",
+    "duration": "10 giờ",
+    "price": 0,
+    "originalPrice": 0,
+    "isFree": true,
+    "featured": false,
+    "promotionIds": [],
+    "lessons": [
+      { "id": "c06-l1", "title": "Giao diện Photoshop", "content": "Các panel và công cụ quan trọng.", "video": "https://www.youtube.com/embed/IyR_uYsRdPs" },
+      { "id": "c06-l2", "title": "Layer và Selection", "content": "Làm việc với layer và vùng chọn.", "video": "https://www.youtube.com/embed/IyR_uYsRdPs" }
+    ]
+  },
+  {
+    "id": "c07",
+    "title": "Tiếng Anh giao tiếp cho người đi làm",
+    "description": "Tự tin giao tiếp tiếng Anh trong môi trường công sở: email, thuyết trình, phỏng vấn.",
+    "category": "Ngoại ngữ",
+    "level": "Trung bình",
+    "thumbnail": "assets/images/course-english.svg",
+    "sponsorId": "sp04",
+    "instructor": "Sarah Nguyen",
+    "duration": "22 giờ",
+    "price": 649000,
+    "originalPrice": 649000,
+    "isFree": false,
+    "featured": false,
+    "promotionIds": ["pr03"],
+    "lessons": [
+      { "id": "c07-l1", "title": "Giới thiệu bản thân bằng tiếng Anh", "content": "Mẫu câu và từ vựng giới thiệu bản thân.", "video": "https://www.youtube.com/embed/juKd26qkNAw" },
+      { "id": "c07-l2", "title": "Viết email công sở", "content": "Cấu trúc email chuyên nghiệp bằng tiếng Anh.", "video": "https://www.youtube.com/embed/juKd26qkNAw" },
+      { "id": "c07-l3", "title": "Kỹ năng thuyết trình", "content": "Mở đầu, triển khai và kết thúc bài thuyết trình.", "video": "https://www.youtube.com/embed/juKd26qkNAw" }
+    ]
+  },
+  {
+    "id": "c08",
+    "title": "Marketing cơ bản",
+    "description": "Nhập môn marketing: phân tích thị trường, hành vi khách hàng và kênh marketing số.",
+    "category": "Kinh doanh",
+    "level": "Cơ bản",
+    "thumbnail": "assets/images/course-marketing.svg",
+    "sponsorId": "sp03",
+    "instructor": "Trần Quốc Bảo",
+    "duration": "12 giờ",
+    "price": 449000,
+    "originalPrice": 449000,
+    "isFree": false,
+    "featured": false,
+    "promotionIds": ["pr03"],
+    "lessons": [
+      { "id": "c08-l1", "title": "Marketing là gì?", "content": "Khái niệm và vai trò của marketing trong doanh nghiệp.", "video": "https://www.youtube.com/embed/bixR-KIJKYM" },
+      { "id": "c08-l2", "title": "Phân tích khách hàng mục tiêu", "content": "Xây dựng chân dung khách hàng (persona).", "video": "https://www.youtube.com/embed/bixR-KIJKYM" }
+    ]
+  },
+  {
+    "id": "c09",
+    "title": "Kỹ năng Excel văn phòng",
+    "description": "Khóa học miễn phí về Excel: hàm cơ bản, bảng tính, biểu đồ và xử lý dữ liệu.",
+    "category": "Kỹ năng",
+    "level": "Cơ bản",
+    "thumbnail": "assets/images/course-excel.svg",
+    "sponsorId": "sp03",
+    "instructor": "Vũ Thị Mai",
+    "duration": "8 giờ",
+    "price": 0,
+    "originalPrice": 0,
+    "isFree": true,
+    "featured": false,
+    "promotionIds": [],
+    "lessons": [
+      { "id": "c09-l1", "title": "Làm quen bảng tính Excel", "content": "Nhập liệu, định dạng ô và các thao tác cơ bản.", "video": "https://www.youtube.com/embed/rwbho0CgEAE" },
+      { "id": "c09-l2", "title": "Hàm SUM, AVERAGE, IF", "content": "Các hàm Excel được dùng nhiều nhất.", "video": "https://www.youtube.com/embed/rwbho0CgEAE" }
+    ]
+  },
+  {
+    "id": "c10",
+    "title": "Tiếng Nhật N5 miễn phí",
+    "description": "Khóa học miễn phí học tiếng Nhật cấp độ N5: bảng chữ cái, ngữ pháp và từ vựng cơ bản.",
+    "category": "Ngoại ngữ",
+    "level": "Cơ bản",
+    "thumbnail": "assets/images/course-japanese.svg",
+    "sponsorId": "sp04",
+    "instructor": "Tanaka Yuki",
+    "duration": "16 giờ",
+    "price": 0,
+    "originalPrice": 0,
+    "isFree": true,
+    "featured": true,
+    "promotionIds": [],
+    "lessons": [
+      { "id": "c10-l1", "title": "Bảng chữ cái Hiragana", "content": "Học và luyện viết Hiragana.", "video": "https://www.youtube.com/embed/wD3FJgij79c" },
+      { "id": "c10-l2", "title": "Bảng chữ cái Katakana", "content": "Học và luyện viết Katakana.", "video": "https://www.youtube.com/embed/wD3FJgij79c" },
+      { "id": "c10-l3", "title": "Ngữ pháp N5 bài 1", "content": "Cấu trúc câu khẳng định và nghi vấn cơ bản.", "video": "https://www.youtube.com/embed/wD3FJgij79c" }
+    ]
+  }
+]

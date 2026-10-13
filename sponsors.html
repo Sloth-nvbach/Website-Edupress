@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nhà tài trợ Edupress - Khám phá các đối tác giáo dục, tổ chức tài trợ khóa học và chương trình ưu đãi.">
+  <title>Nhà tài trợ - Edupress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <div id="header-placeholder"></div>
+
+  <main id="main-content" role="main">
+    <section class="section" style="padding-top: 40px;">
+      <div class="container">
+        <nav aria-label="Breadcrumb" style="margin-bottom: 24px;">
+          <ol class="flex gap-8" style="font-size: 14px; color: var(--text-muted);">
+            <li><a href="index.html" style="color: var(--text-muted);">Trang chủ</a></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" style="color: var(--text-primary); font-weight: 500;">Nhà tài trợ</li>
+          </ol>
+        </nav>
+
+        <h1 class="section-title" style="margin-bottom: 8px;">Nhà tài trợ & Đối tác</h1>
+        <p class="section-subtitle">Các tổ chức uy tín đồng hành cùng Edupress mang đến kiến thức chất lượng</p>
+
+        <div class="grid grid-4" id="sponsors-grid"></div>
+
+        <hr style="margin: 48px 0; border-color: var(--border-color);">
+
+        <h2 class="section-title" style="margin-bottom: 24px;">Hợp tác với Edupress</h2>
+        <p class="section-subtitle" style="margin-bottom: 32px;">Bạn muốn trở thành nhà tài trợ hoặc đăng tải khóa học trên nền tảng?</p>
+
+        <div class="grid grid-2" style="gap: 32px; align-items: start;">
+          <div>
+            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Lợi ích khi hợp tác</h3>
+            <ul style="line-height: 2; color: var(--text-secondary); padding-left: 20px;">
+              <li>Tiếp cận hàng ngàn học viên tiềm năng</li>
+              <li>Xây dựng thương hiệu giáo dục uy tín</li>
+              <li>Hỗ trợ marketing và quảng bá khóa học</li>
+              <li>Báo cáo doanh thu và phân tích chi tiết</li>
+              <li>Hệ thống quản lý khóa học dễ dàng</li>
+            </ul>
+          </div>
+
+          <div class="card" style="padding: 24px;">
+            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 20px;">Gửi yêu cầu hợp tác</h3>
+            <form id="sponsor-request-form">
+              <div class="form-group">
+                <label for="org-name" class="form-label">Tên tổ chức/Đơn vị</label>
+                <input type="text" id="org-name" class="form-input" required placeholder="Ví dụ: Công ty ABC">
+              </div>
+              <div class="form-group">
+                <label for="contact-name" class="form-label">Người đại diện</label>
+                <input type="text" id="contact-name" class="form-input" required placeholder="Họ và tên">
+              </div>
+              <div class="form-group">
+                <label for="contact-email" class="form-label">Email liên hệ</label>
+                <input type="email" id="contact-email" class="form-input" required placeholder="contact@company.com">
+              </div>
+              <div class="form-group">
+                <label for="contact-phone" class="form-label">Số điện thoại</label>
+                <input type="tel" id="contact-phone" class="form-input" placeholder="0901234567">
+              </div>
+              <div class="form-group">
+                <label for="request-type" class="form-label">Loại hợp tác</label>
+                <select id="request-type" class="form-input" required>
+                  <option value="">Chọn loại hợp tác</option>
+                  <option value="sponsor">Tài trợ khóa học</option>
+                  <option value="content_provider">Cung cấp nội dung/giảng viên</option>
+                  <option value="promotion">Chương trình khuyến mãi</option>
+                  <option value="other">Khác</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="request-message" class="form-label">Mô tả chi tiết</label>
+                <textarea id="request-message" class="form-input" rows="4" required placeholder="Mô tả ý tưởng hợp tác, khóa học muốn tài trợ, ngân sách dự kiến..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Gửi yêu cầu</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/courses.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Utils.onReady(() => {
+      const sponsors = Storage.getSponsors();
+      const sponsorsGrid = Utils.getElement('#sponsors-grid');
+
+      if (sponsorsGrid) {
+        sponsorsGrid.innerHTML = sponsors.map(sponsor => {
+          const sponsorCourses = Storage.getCourses().filter(c => c.sponsorId === sponsor.id);
+          return `
+            <article class="sponsor-card" data-sponsor-id="${sponsor.id}">
+              <img src="${Utils.escapeHtml(sponsor.logo)}" alt="${Utils.escapeHtml(sponsor.name)}" class="sponsor-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div style="display: none; width: 100px; height: 100px; border-radius: var(--radius-md); background: var(--primary-light); color: var(--primary-color); align-items: center; justify-content: center; font-size: 32px; font-weight: 700; margin: 0 auto 16px;">${Utils.getInitials(sponsor.name)}</div>
+              <h3 class="sponsor-name">${Utils.escapeHtml(sponsor.name)}</h3>
+              <p class="sponsor-desc">${Utils.escapeHtml(sponsor.description)}</p>
+              <div class="sponsor-courses">
+                ${sponsorCourses.slice(0, 3).map(c => `<span class="sponsor-course-tag">${Utils.escapeHtml(c.title)}</span>`).join('')}
+                ${sponsorCourses.length > 3 ? `<span class="sponsor-course-tag">+${sponsorCourses.length - 3} khóa khác</span>` : ''}
+              </div>
+              <a href="sponsors.html?id=${sponsor.id}" class="btn btn-outline btn-sm" style="margin-top: 16px; width: 100%;">Xem chi tiết</a>
+            </article>
+          `;
+        }).join('');
+      }
+
+      const requestForm = Utils.getElement('#sponsor-request-form');
+      if (requestForm) {
+        requestForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const formData = {
+            orgName: Utils.getElement('#org-name').value.trim(),
+            contactName: Utils.getElement('#contact-name').value.trim(),
+            contactEmail: Utils.getElement('#contact-email').value.trim(),
+            contactPhone: Utils.getElement('#contact-phone').value.trim(),
+            requestType: Utils.getElement('#request-type').value,
+            message: Utils.getElement('#request-message').value.trim()
+          };
+
+          if (!formData.orgName || !formData.contactName || !formData.contactEmail || !formData.requestType || !formData.message) {
+            Utils.showToast('Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
+            return;
+          }
+
+          if (!Utils.validateEmail(formData.contactEmail)) {
+            Utils.showToast('Email không hợp lệ', 'error');
+            return;
+          }
+
+          const request = Storage.addSponsorRequest(formData);
+          Utils.showToast('Gửi yêu cầu hợp tác thành công! Chúng tôi sẽ liên hệ sớm nhất.', 'success');
+          requestForm.reset();
+        });
+      }
+
+      const params = Utils.getUrlParams();
+      if (params.id) {
+        const sponsor = Storage.getSponsorById(params.id);
+        if (sponsor) {
+          const sponsorCourses = Storage.getCourses().filter(c => c.sponsorId === sponsor.id);
+          const sponsorPromotions = Storage.getPromotions().filter(p => 
+            p.courseIds && p.courseIds.some(cid => sponsorCourses.some(sc => sc.id === cid))
+          );
+
+          const modalContent = `
+            <div style="text-align: center; margin-bottom: 24px;">
+              <img src="${Utils.escapeHtml(sponsor.logo)}" alt="${Utils.escapeHtml(sponsor.name)}" style="width: 120px; height: 120px; border-radius: var(--radius-md); object-fit: cover; margin-bottom: 16px;" onerror="this.style.display='none'">
+              <h3>${Utils.escapeHtml(sponsor.name)}</h3>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">${Utils.escapeHtml(sponsor.description)}</p>
+
+            <h4 style="margin-bottom: 12px;">Khóa học tài trợ (${sponsorCourses.length})</h4>
+            <div style="max-height: 200px; overflow-y: auto; margin-bottom: 24px;">
+              ${sponsorCourses.map(c => `
+                <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                  <span>${Utils.escapeHtml(c.title)}</span>
+                  <span class="${c.isFree ? 'text-success' : 'text-primary'}">${c.isFree ? 'Miễn phí' : Utils.formatCurrency(c.price)}</span>
+                </div>
+              `).join('') || '<p class="text-muted">Chưa có khóa học nào</p>'}
+            </div>
+
+            ${sponsorPromotions.length > 0 ? `
+              <h4 style="margin-bottom: 12px;">Chương trình ưu đãi</h4>
+              <div style="max-height: 150px; overflow-y: auto;">
+                ${sponsorPromotions.map(p => `
+                  <div style="padding: 12px; background: var(--primary-light); border-radius: var(--radius-md); margin-bottom: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color);">${Utils.escapeHtml(p.name)}</p>
+                    <p style="font-size: 13px; color: var(--text-secondary);">${Utils.escapeHtml(p.description)}</p>
+                    <p style="font-size: 12px; color: var(--text-muted);">Mã: ${Utils.escapeHtml(p.code)} | Hết hạn: ${Utils.formatDate(p.endDate)}</p>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          `;
+
+          Utils.showModal(modalContent, {
+            title: 'Chi tiết nhà tài trợ',
+            confirmText: 'Đóng',
+            cancelText: '',
+            onConfirm: () => {}
+          });
+
+          Utils.setUrlParam('id', '');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

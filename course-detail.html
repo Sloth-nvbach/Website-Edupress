@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chi tiết khóa học trên Edupress - Xem thông tin đầy đủ, chương trình học, giá cả và đăng ký ngay hôm nay.">
+  <title>Chi tiết khóa học - Edupress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <div id="header-placeholder"></div>
+
+  <main id="main-content" role="main">
+    <section class="section" style="padding-top: 40px;">
+      <div class="container">
+        <nav aria-label="Breadcrumb" style="margin-bottom: 24px;">
+          <ol class="flex gap-8" style="font-size: 14px; color: var(--text-muted);">
+            <li><a href="index.html" style="color: var(--text-muted);">Trang chủ</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a href="courses.html" style="color: var(--text-muted);">Khóa học</a></li>
+            <li aria-hidden="true">/</li>
+            <li id="breadcrumb-title" aria-current="page" style="color: var(--text-primary); font-weight: 500;">Chi tiết khóa học</li>
+          </ol>
+        </nav>
+
+        <div id="course-detail-content">
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <div class="empty-state-icon">⏳</div>
+            <h3 class="empty-state-title">Đang tải thông tin khóa học...</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/courses.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Utils.onReady(() => {
+      const params = Utils.getUrlParams();
+      const courseId = params.id;
+
+      if (!courseId) {
+        window.location.href = 'courses.html';
+        return;
+      }
+
+      const courseDetail = Courses.getCourseDetail(courseId);
+      const container = Utils.getElement('#course-detail-content');
+      const breadcrumbTitle = Utils.getElement('#breadcrumb-title');
+
+      if (!courseDetail) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <div class="empty-state-icon">🔍</div>
+            <h3 class="empty-state-title">Không tìm thấy khóa học</h3>
+            <p class="empty-state-desc">Khóa học bạn tìm kiếm không tồn tại hoặc đã bị xóa.</p>
+            <a href="courses.html" class="btn btn-primary">Quay lại danh sách khóa học</a>
+          </div>
+        `;
+        return;
+      }
+
+      if (breadcrumbTitle) {
+        breadcrumbTitle.textContent = courseDetail.title;
+      }
+
+      document.title = `${courseDetail.title} - Edupress`;
+
+      const enrollment = Auth.currentUser ? Storage.getEnrollment(Auth.currentUser.id, courseId) : null;
+      const isEnrolled = !!enrollment;
+      const isFree = courseDetail.isFree;
+      const currentPrice = courseDetail.currentPrice;
+      const hasPromotion = courseDetail.hasPromotion;
+      const discountPercent = courseDetail.discountPercent;
+
+      let priceHtml = '';
+      if (isFree) {
+        priceHtml = '<span class="price-free" style="font-size: 24px;">Miễn phí</span>';
+      } else if (hasPromotion) {
+        priceHtml = `
+          <span class="price-current" style="font-size: 28px;">${Utils.formatCurrency(currentPrice)}</span>
+          <span class="price-original" style="font-size: 18px;">${Utils.formatCurrency(courseDetail.price)}</span>
+          ${discountPercent ? `<span class="badge badge-sale" style="font-size: 14px; margin-left: 12px;">-${discountPercent}%</span>` : ''}
+        `;
+      } else {
+        priceHtml = `<span class="price-current" style="font-size: 28px;">${Utils.formatCurrency(courseDetail.price)}</span>`;
+      }
+
+      const sponsor = courseDetail.sponsor;
+      const promotions = courseDetail.promotions;
+
+      let enrollButtonHtml = '';
+      if (isEnrolled) {
+        enrollButtonHtml = `
+          <a href="learning.html?id=${courseId}" class="btn btn-primary btn-lg" style="width: 100%;">Tiếp tục học</a>
+        `;
+      } else if (isFree) {
+        enrollButtonHtml = `
+          <button class="btn btn-primary btn-lg enroll-btn" data-course-id="${courseId}" style="width: 100%;">Đăng ký miễn phí</button>
+        `;
+      } else {
+        enrollButtonHtml = `
+          <button class="btn btn-primary btn-lg enroll-btn" data-course-id="${courseId}" style="width: 100%;">Đăng ký ngay - ${Utils.formatCurrency(currentPrice)}</button>
+          ${hasPromotion ? `<p style="text-align: center; color: var(--secondary-color); font-weight: 500; margin-top: 8px;">Đã áp dụng ưu đãi: ${promotions[0].name}</p>` : ''}
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="grid grid-2" style="gap: 32px; align-items: start;">
+          <div>
+            <div class="course-detail-image">
+              <img src="${Utils.escapeHtml(courseDetail.thumbnail || 'assets/images/course-placeholder.svg')}" alt="${Utils.escapeHtml(courseDetail.title)}" onerror="this.src='assets/images/course-placeholder.svg'">
+            </div>
+
+            <div class="course-enroll-section" style="margin-top: 24px;">
+              <div class="course-enroll-price flex-between" style="flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+                <div>${priceHtml}</div>
+                ${isFree ? '' : `<span class="badge ${isFree ? 'badge-free' : 'badge-paid'}">${isFree ? 'Miễn phí' : 'Trả phí'}</span>`}
+              </div>
+              <div class="course-enroll-actions" style="flex-direction: column;">
+                ${enrollButtonHtml}
+              </div>
+              ${sponsor ? `
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+                  <p style="font-size: 14px; color: var(--text-secondary);">
+                    <strong>Nhà tài trợ:</strong> <a href="sponsors.html?id=${sponsor.id}" style="color: var(--primary-color);">${Utils.escapeHtml(sponsor.name)}</a>
+                  </p>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+
+          <div>
+            <header class="course-detail-header">
+              ${courseDetail.featured ? '<span class="badge badge-new" style="margin-bottom: 12px; display: inline-block;">Nổi bật</span>' : ''}
+              <h1 class="course-detail-title">${Utils.escapeHtml(courseDetail.title)}</h1>
+              <div class="course-detail-meta">
+                <span>👨‍🏫 ${Utils.escapeHtml(courseDetail.instructor || 'Giảng viên')}</span>
+                <span>📚 ${courseDetail.lessons ? courseDetail.lessons.length : 0} bài học</span>
+                <span>⏱️ ${Utils.escapeHtml(courseDetail.duration || 'N/A')}</span>
+                <span>📊 ${Utils.escapeHtml(courseDetail.level || 'Cơ bản')}</span>
+                <span>🏷️ ${Utils.escapeHtml(courseDetail.category || 'Chung')}</span>
+              </div>
+            </header>
+
+            <section class="course-detail-section">
+              <h2 class="course-detail-section-title">Mô tả khóa học</h2>
+              <div class="course-detail-description">${Utils.escapeHtml(courseDetail.description).replace(/\n/g, '<br>')}</div>
+            </section>
+
+            <section class="course-detail-section">
+              <h2 class="course-detail-section-title">Chương trình học (${courseDetail.lessons ? courseDetail.lessons.length : 0} bài)</h2>
+              <div class="lesson-list" id="lesson-list">
+                ${courseDetail.lessons ? courseDetail.lessons.map((lesson, index) => `
+                  <div class="lesson-item" data-lesson-id="${lesson.id}">
+                    <div class="lesson-checkbox" aria-label="Chưa hoàn thành"></div>
+                    <div class="lesson-info">
+                      <div class="lesson-title">${index + 1}. ${Utils.escapeHtml(lesson.title)}</div>
+                      <div class="lesson-duration">${Utils.escapeHtml(lesson.content || 'Nội dung bài học')}</div>
+                    </div>
+                    <span class="lesson-action">${isEnrolled ? 'Xem bài học' : 'Đăng ký để xem'}</span>
+                  </div>
+                `).join('') : '<p class="text-muted">Chưa có thông tin chi tiết chương trình học.</p>'}
+              </div>
+            </section>
+
+            ${promotions.length > 0 ? `
+              <section class="course-detail-section">
+                <h2 class="course-detail-section-title">Chương trình ưu đãi áp dụng</h2>
+                <div class="card" style="padding: 16px; background: var(--primary-light); border-color: var(--primary-color);">
+                  ${promotions.map(promo => `
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+                      <div>
+                        <p style="font-weight: 600; color: var(--primary-color);">${Utils.escapeHtml(promo.name)}</p>
+                        <p style="font-size: 14px; color: var(--text-secondary);">${Utils.escapeHtml(promo.description)}</p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Mã: <code>${Utils.escapeHtml(promo.code)}</code> | Hết hạn: ${Utils.formatDate(promo.endDate)}</p>
+                      </div>
+                      <span class="badge badge-sale" style="font-size: 14px;">
+                        ${promo.type === 'percent' ? `-${promo.value}%` : `-${Utils.formatCurrency(promo.value)}`}
+                      </span>
+                    </div>
+                  `).join('')}
+                </div>
+              </section>
+            ` : ''}
+          </div>
+        </div>
+      `;
+
+      const enrollBtn = Utils.getElement('.enroll-btn');
+      if (enrollBtn) {
+        enrollBtn.addEventListener('click', () => handleEnroll(courseDetail));
+      }
+    });
+
+    function handleEnroll(course) {
+      if (!Auth.currentUser) {
+        Utils.showToast('Vui lòng đăng nhập để đăng ký khóa học', 'warning');
+        setTimeout(() => {
+          window.location.href = `login.html?redirect=${encodeURIComponent(window.location.href)}`;
+        }, 1500);
+        return;
+      }
+
+      const existingEnrollment = Storage.getEnrollment(Auth.currentUser.id, course.id);
+      if (existingEnrollment) {
+        Utils.showToast('Bạn đã đăng ký khóa học này', 'info');
+        setTimeout(() => window.location.href = `learning.html?id=${course.id}`, 1000);
+        return;
+      }
+
+      if (course.isFree) {
+        const result = Storage.enrollUser(Auth.currentUser.id, course.id);
+        if (result.success) {
+          Utils.showToast('Đăng ký khóa học miễn phí thành công!', 'success');
+          setTimeout(() => window.location.href = `learning.html?id=${course.id}`, 1000);
+        } else {
+          Utils.showToast(result.message, 'error');
+        }
+      } else {
+        Utils.showModal(`
+          <p>Bạn sắp đăng ký khóa học <strong>${Utils.escapeHtml(course.title)}</strong> với giá <strong>${Utils.formatCurrency(course.currentPrice)}</strong>.</p>
+          <p style="margin-top: 12px; font-size: 14px; color: var(--text-secondary);">
+            <em>Lưu ý: Đây là bản demo, không có thanh toán thực tế. Nhấn "Xác nhận thanh toán" để mô phỏng việc đăng ký thành công.</em>
+          </p>
+        `, {
+          title: 'Xác nhận đăng ký khóa học trả phí',
+          confirmText: 'Xác nhận thanh toán (Demo)',
+          cancelText: 'Hủy',
+          onConfirm: () => {
+            const result = Storage.enrollUser(Auth.currentUser.id, course.id, {
+              amount: course.currentPrice,
+              originalAmount: course.price,
+              promotionApplied: course.hasPromotion ? course.promotions[0].code : null,
+              method: 'demo',
+              status: 'completed',
+              paidAt: new Date().toISOString()
+            });
+            if (result.success) {
+              Utils.showToast('Đăng ký khóa học thành công! (Demo)', 'success');
+              setTimeout(() => window.location.href = `learning.html?id=${course.id}`, 1000);
+            }
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "pr01",
+    "code": "SUMMER50",
+    "name": "Ưu đãi mùa hè 50%",
+    "description": "Giảm 50% cho các khóa học lập trình được chọn.",
+    "type": "percent",
+    "value": 50,
+    "startDate": "2026-01-01",
+    "endDate": "2026-12-31",
+    "courseIds": ["c01", "c04"],
+    "active": true
+  },
+  {
+    "id": "pr02",
+    "code": "DESIGN30",
+    "name": "Giảm 30% khóa thiết kế",
+    "description": "Giảm 30% cho khóa học thiết kế UI/UX.",
+    "type": "percent",
+    "value": 30,
+    "startDate": "2026-01-01",
+    "endDate": "2026-12-31",
+    "courseIds": ["c05"],
+    "active": true
+  },
+  {
+    "id": "pr03",
+    "code": "BACK2SCHOOL",
+    "name": "Tựu trường giảm 100K",
+    "description": "Giảm 100.000đ cho các khóa học ngoại ngữ và kinh doanh.",
+    "type": "fixed",
+    "value": 100000,
+    "startDate": "2026-01-01",
+    "endDate": "2026-12-31",
+    "courseIds": ["c07", "c08"],
+    "active": true
+  },
+  {
+    "id": "pr04",
+    "code": "OLDCODE",
+    "name": "Khuyến mãi đã hết hạn",
+    "description": "Chương trình cũ, không còn hiệu lực.",
+    "type": "percent",
+    "value": 20,
+    "startDate": "2025-01-01",
+    "endDate": "2025-12-31",
+    "courseIds": ["c02"],
+    "active": false
+  }
+]

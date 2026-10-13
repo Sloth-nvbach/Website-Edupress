@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Đăng nhập Edupress - Truy cập khóa học, theo dõi tiến độ học tập và quản lý hồ sơ cá nhân.">
+  <title>Đăng nhập - Edupress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <div id="header-placeholder"></div>
+
+  <main id="main-content" role="main">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div style="text-align: center; margin-bottom: 8px;">
+          <svg width="48" height="48" viewBox="0 0 32 32" fill="none" aria-hidden="true" style="color: var(--primary-color);">
+            <rect width="32" height="32" rx="8" fill="currentColor"/>
+            <path d="M8 12h16M8 16h12M8 20h8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h1 class="auth-title">Đăng nhập</h1>
+        <p class="auth-subtitle">Chào mừng bạn quay lại Edupress</p>
+
+        <form id="login-form" class="auth-form" novalidate>
+          <div id="login-error" class="form-error" role="alert"></div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email" aria-describedby="login-error">
+          </div>
+
+          <div class="form-group">
+            <div class="flex-between" style="margin-bottom: 6px;">
+              <label for="password" class="form-label">Mật khẩu</label>
+              <a href="#" id="forgot-password" style="font-size: 14px;">Quên mật khẩu?</a>
+            </div>
+            <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required autocomplete="current-password" aria-describedby="login-error">
+          </div>
+
+          <div class="form-group">
+            <label class="flex items-center gap-8" style="cursor: pointer; font-weight: 400;">
+              <input type="checkbox" id="remember" name="remember" style="width: 18px; height: 18px; accent-color: var(--primary-color);">
+              <span>Ghi nhớ đăng nhập</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">Đăng nhập</button>
+        </form>
+
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color); text-align: center;">
+          <p style="color: var(--text-secondary);">Hoặc đăng nhập với</p>
+          <div class="flex gap-12" style="margin-top: 16px; justify-content: center;">
+            <button class="btn btn-outline" style="width: 100%;" disabled>Google</button>
+            <button class="btn btn-outline" style="width: 100%;" disabled>Facebook</button>
+          </div>
+        </div>
+
+        <p class="auth-footer" style="margin-top: 24px;">
+          Chưa có tài khoản? <a href="register.html?redirect=${Utils.getQueryParam('redirect') || ''}">Đăng ký ngay</a>
+        </p>
+
+        <details style="margin-top: 24px; padding: 16px; background: var(--bg-secondary); border-radius: var(--radius-md); font-size: 13px; color: var(--text-secondary);">
+          <summary style="cursor: pointer; font-weight: 500; color: var(--text-primary);">Tài khoản demo</summary>
+          <div style="margin-top: 12px; line-height: 2;">
+            <strong>Học viên:</strong> demo@edupress.vn / 123456<br>
+            <strong>Quản trị:</strong> admin@edupress.vn / admin123
+          </div>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Utils.onReady(() => {
+      const redirect = Utils.getQueryParam('redirect');
+      if (redirect) {
+        const form = Utils.getElement('#login-form');
+        if (form) {
+          const hiddenInput = document.createElement('input');
+          hiddenInput.type = 'hidden';
+          hiddenInput.name = 'redirect';
+          hiddenInput.value = redirect;
+          form.appendChild(hiddenInput);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

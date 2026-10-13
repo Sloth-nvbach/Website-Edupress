@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Trang quản trị Edupress - Quản lý khóa học, nhà tài trợ, khuyến mãi và yêu cầu hợp tác.">
+  <title>Quản trị - Edupress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <div id="header-placeholder"></div>
+
+  <main id="main-content" role="main">
+    <div id="admin-content">
+      <div class="container" style="padding: 40px 20px; text-align: center;">
+        <div class="empty-state">
+          <div class="empty-state-icon">⏳</div>
+          <h3 class="empty-state-title">Đang tải trang quản trị...</h3>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Utils.onReady(() => {
+      if (!Auth.requireAdmin()) return;
+
+      const container = Utils.getElement('#admin-content');
+      container.innerHTML = `
+        <div class="admin-layout flex">
+          <aside class="admin-sidebar" role="navigation" aria-label="Menu quản trị">
+            <nav class="admin-nav">
+              <a href="#" class="admin-nav-item active" data-tab="courses">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M12 7v10"/><path d="M17 7H12"/></svg>
+                Quản lý khóa học
+              </a>
+              <a href="#" class="admin-nav-item" data-tab="sponsors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Nhà tài trợ
+              </a>
+              <a href="#" class="admin-nav-item" data-tab="promotions">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Khuyến mãi
+              </a>
+              <a href="#" class="admin-nav-item" data-tab="requests">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                Yêu cầu hợp tác
+              </a>
+            </nav>
+          </aside>
+
+          <div class="admin-main">
+            <div class="admin-header flex-between">
+              <h1 id="admin-page-title" class="section-title" style="margin-bottom: 0;">Quản lý khóa học</h1>
+              <button class="btn btn-primary" id="add-course-btn">Thêm khóa học</button>
+            </div>
+
+            <div id="admin-tab-content">
+              <!-- Course Management -->
+              <div class="admin-tab-panel" id="courses-panel">
+                <div class="card" style="overflow-x: auto;">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 60px;">Ảnh</th>
+                        <th>Tên khóa học</th>
+                        <th>Danh mục</th>
+                        <th>Giảng viên</th>
+                        <th>Giá</th>
+                        <th>Trạng thái</th>
+                        <th>Nổi bật</th>
+                        <th style="width: 120px;">Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="courses-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Sponsor Management -->
+              <div class="admin-tab-panel" id="sponsors-panel" style="display: none;">
+                <div class="flex-between" style="margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                  <h2 class="section-title" style="margin-bottom: 0;">Quản lý nhà tài trợ</h2>
+                  <button class="btn btn-primary" id="add-sponsor-btn">Thêm nhà tài trợ</button>
+                </div>
+                <div class="card" style="overflow-x: auto;">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 60px;">Logo</th>
+                        <th>Tên</th>
+                        <th>Mô tả</th>
+                        <th>Số khóa học</th>
+                        <th style="width: 120px;">Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sponsors-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Promotion Management -->
+              <div class="admin-tab-panel" id="promotions-panel" style="display: none;">
+                <div class="flex-between" style="margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                  <h2 class="section-title" style="margin-bottom: 0;">Quản lý khuyến mãi</h2>
+                  <button class="btn btn-primary" id="add-promotion-btn">Thêm khuyến mãi</button>
+                </div>
+                <div class="card" style="overflow-x: auto;">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Mã</th>
+                        <th>Tên chương trình</th>
+                        <th>Loại</th>
+                        <th>Giá trị</th>
+                        <th>Thời gian</th>
+                        <th>Áp dụng cho</th>
+                        <th>Trạng thái</th>
+                        <th style="width: 120px;">Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="promotions-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Sponsor Requests -->
+              <div class="admin-tab-panel" id="requests-panel" style="display: none;">
+                <h2 class="section-title" style="margin-bottom: 24px;">Yêu cầu hợp tác</h2>
+                <div class="card" style="overflow-x: auto;">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Tổ chức</th>
+                        <th>Người liên hệ</th>
+                        <th>Email</th>
+                        <th>Loại hợp tác</th>
+                        <th>Ngày gửi</th>
+                        <th>Trạng thái</th>
+                        <th style="width: 150px;">Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="requests-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      initAdminTabs();
+      renderCoursesTable();
+      renderSponsorsTable();
+      renderPromotionsTable();
+      renderRequestsTable();
+      bindAdminEvents();
+    });
+
+    function initAdminTabs() {
+      const tabLinks = Utils.getElements('.admin-nav-item');
+      const tabPanels = Utils.getElements('.admin-tab-panel');
+
+      tabLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const tab = link.dataset.tab;
+
+          tabLinks.forEach(l => Utils.removeClass(l, 'active'));
+          Utils.addClass(link, 'active');
+
+          tabPanels.forEach(panel => panel.style.display = 'none');
+          Utils.getElement(`${tab}-panel`).style.display = 'block';
+
+          const titles = {
+            courses: 'Quản lý khóa học',
+            sponsors: 'Quản lý nhà tài trợ',
+            promotions: 'Quản lý khuyến mãi',
+            requests: 'Yêu cầu hợp tác'
+          };
+          Utils.getElement('#admin-page-title').textContent = titles[tab];
+        });
+      });
+    }
+
+    function renderCoursesTable() {
+      const courses = Storage.getCourses();
+      const tbody = Utils.getElement('#courses-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = courses.map(course => {
+        const sponsor = Storage.getSponsorById(course.sponsorId);
+        return `
+          <tr>
+            <td><img src="${Utils.escapeHtml(course.thumbnail || 'assets/images/course-placeholder.svg')}" alt="" style="width: 50px; height: 30px; object-fit: cover; border-radius: var(--radius-sm);" onerror="this.src='assets/images/course-placeholder.png'"></td>
+            <td>${Utils.escapeHtml(course.title)}</td>
+            <td>${Utils.escapeHtml(course.category)}</td>
+            <td>${Utils.escapeHtml(course.instructor)}</td>
+            <td>${course.isFree ? '<span class="badge badge-free">Miễn phí</span>' : Utils.formatCurrency(course.price)}</td>
+            <td><span class="badge ${course.isFree ? 'badge-free' : 'badge-paid'}">${course.isFree ? 'Miễn phí' : 'Trả phí'}</span></td>
+            <td>${course.featured ? '<span class="badge badge-new">Có</span>' : '<span class="badge" style="background: var(--bg-tertiary); color: var(--text-muted);">Không</span>'}</td>
+            <td>
+              <div class="admin-actions">
+                <button class="btn btn-outline btn-sm edit-course" data-id="${course.id}" title="Sửa">✏️</button>
+                <button class="btn btn-danger btn-sm delete-course" data-id="${course.id}" title="Xóa">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderSponsorsTable() {
+      const sponsors = Storage.getSponsors();
+      const tbody = Utils.getElement('#sponsors-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = sponsors.map(sponsor => {
+        const courseCount = Storage.getCourses().filter(c => c.sponsorId === sponsor.id).length;
+        return `
+          <tr>
+            <td><img src="${Utils.escapeHtml(sponsor.logo)}" alt="" style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--radius-sm);" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"><span style="display:none; width:50px; height:50px; border-radius:var(--radius-sm); background:var(--primary-light); color:var(--primary-color); align-items:center; justify-content:center; font-weight:700;">${Utils.getInitials(sponsor.name)}</span></td>
+            <td>${Utils.escapeHtml(sponsor.name)}</td>
+            <td>${Utils.escapeHtml(sponsor.description)}</td>
+            <td>${courseCount}</td>
+            <td>
+              <div class="admin-actions">
+                <button class="btn btn-outline btn-sm edit-sponsor" data-id="${sponsor.id}" title="Sửa">✏️</button>
+                <button class="btn btn-danger btn-sm delete-sponsor" data-id="${sponsor.id}" title="Xóa">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderPromotionsTable() {
+      const promotions = Storage.getPromotions();
+      const tbody = Utils.getElement('#promotions-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = promotions.map(promo => {
+        const courseNames = promo.courseIds?.map(id => {
+          const c = Storage.getCourseById(id);
+          return c ? c.title : id;
+        }).join(', ') || 'Tất cả';
+
+        return `
+          <tr>
+            <td><code>${Utils.escapeHtml(promo.code)}</code></td>
+            <td>${Utils.escapeHtml(promo.name)}</td>
+            <td>${promo.type === 'percent' ? 'Giảm %' : 'Giảm cố định'}</td>
+            <td>${promo.type === 'percent' ? promo.value + '%' : Utils.formatCurrency(promo.value)}</td>
+            <td>${Utils.formatDate(promo.startDate)} - ${Utils.formatDate(promo.endDate)}</td>
+            <td>${Utils.escapeHtml(courseNames)}</td>
+            <td><span class="badge ${promo.active ? 'badge-free' : 'badge'}">${promo.active ? 'Đang hoạt động' : 'Hết hạn/Tắt'}</span></td>
+            <td>
+              <div class="admin-actions">
+                <button class="btn btn-outline btn-sm edit-promotion" data-id="${promo.id}" title="Sửa">✏️</button>
+                <button class="btn btn-danger btn-sm delete-promotion" data-id="${promo.id}" title="Xóa">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderRequestsTable() {
+      const requests = Storage.getSponsorRequests();
+      const tbody = Utils.getElement('#requests-table-body');
+      if (!tbody) return;
+
+      if (requests.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">Chưa có yêu cầu hợp tác nào</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = requests.map(req => `
+        <tr>
+          <td>${Utils.escapeHtml(req.orgName)}</td>
+          <td>${Utils.escapeHtml(req.contactName)}</td>
+          <td>${Utils.escapeHtml(req.contactEmail)}</td>
+          <td>${req.requestType === 'sponsor' ? 'Tài trợ' : req.requestType === 'content_provider' ? 'Cung cấp nội dung' : req.requestType === 'promotion' ? 'Khuyến mãi' : 'Khác'}</td>
+          <td>${Utils.formatDateTime(req.createdAt)}</td>
+          <td><span class="badge ${req.status === 'pending' ? 'badge-sale' : req.status === 'approved' ? 'badge-free' : 'badge-danger'}">${req.status === 'pending' ? 'Chờ duyệt' : req.status === 'approved' ? 'Đã duyệt' : 'Đã từ chối'}</span></td>
+          <td>
+            <div class="admin-actions">
+              ${req.status === 'pending' ? `
+                <button class="btn btn-secondary btn-sm approve-request" data-id="${req.id}">Duyệt</button>
+                <button class="btn btn-danger btn-sm reject-request" data-id="${req.id}">Từ chối</button>
+              ` : ''}
+              <button class="btn btn-outline btn-sm view-request" data-id="${req.id}">Xem</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function bindAdminEvents() {
+      const addCourseBtn = Utils.getElement('#add-course-btn');
+      if (addCourseBtn) {
+        addCourseBtn.addEventListener('click', () => openCourseModal());
+      }
+
+      Utils.getElement('#courses-table-body')?.addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.edit-course');
+        const deleteBtn = e.target.closest('.delete-course');
+        if (editBtn) openCourseModal(editBtn.dataset.id);
+        if (deleteBtn) confirmDeleteCourse(deleteBtn.dataset.id);
+      });
+
+      const addSponsorBtn = Utils.getElement('#add-sponsor-btn');
+      if (addSponsorBtn) {
+        addSponsorBtn.addEventListener('click', () => openSponsorModal());
+      }
+
+      Utils.getElement('#sponsors-table-body')?.addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.edit-sponsor');
+        const deleteBtn = e.target.closest('.delete-sponsor');
+        if (editBtn) openSponsorModal(editBtn.dataset.id);
+        if (deleteBtn) confirmDeleteSponsor(deleteBtn.dataset.id);
+      });
+
+      const addPromotionBtn = Utils.getElement('#add-promotion-btn');
+      if (addPromotionBtn) {
+        addPromotionBtn.addEventListener('click', () => openPromotionModal());
+      }
+
+      Utils.getElement('#promotions-table-body')?.addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.edit-promotion');
+        const deleteBtn = e.target.closest('.delete-promotion');
+        if (editBtn) openPromotionModal(editBtn.dataset.id);
+        if (deleteBtn) confirmDeletePromotion(deleteBtn.dataset.id);
+      });
+
+      Utils.getElement('#requests-table-body')?.addEventListener('click', (e) => {
+        const approveBtn = e.target.closest('.approve-request');
+        const rejectBtn = e.target.closest('.reject-request');
+        const viewBtn = e.target.closest('.view-request');
+        if (approveBtn) updateRequestStatus(approveBtn.dataset.id, 'approved');
+        if (rejectBtn) updateRequestStatus(rejectBtn.dataset.id, 'rejected');
+        if (viewBtn) viewRequest(viewBtn.dataset.id);
+      });
+    }
+
+    function openCourseModal(id = null) {
+      const course = id ? Storage.getCourseById(id) : null;
+      const sponsors = Storage.getSponsors();
+      const promotions = Storage.getPromotions();
+
+      const modalHtml = `
+        <form id="course-form">
+          <input type="hidden" id="course-id" value="${id || ''}">
+          <div class="form-group">
+            <label for="course-title" class="form-label">Tên khóa học *</label>
+            <input type="text" id="course-title" class="form-input" value="${Utils.escapeHtml(course?.title || '')}" required>
+          </div>
+          <div class="form-group">
+            <label for="course-description" class="form-label">Mô tả *</label>
+            <textarea id="course-description" class="form-input" rows="3" required>${Utils.escapeHtml(course?.description || '')}</textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label for="course-category" class="form-label">Danh mục *</label>
+              <input type="text" id="course-category" class="form-input" value="${Utils.escapeHtml(course?.category || '')}" required list="categories">
+              <datalist id="categories">
+                <option value="Lập trình">
+                <option value="Thiết kế">
+                <option value="Ngoại ngữ">
+                <option value="Kinh doanh">
+                <option value="Kỹ năng">
+              </datalist>
+            </div>
+            <div class="form-group">
+              <label for="course-level" class="form-label">Cấp độ *</label>
+              <select id="course-level" class="form-input" required>
+                <option value="Cơ bản" ${course?.level === 'Cơ bản' ? 'selected' : ''}>Cơ bản</option>
+                <option value="Trung bình" ${course?.level === 'Trung bình' ? 'selected' : ''}>Trung bình</option>
+                <option value="Nâng cao" ${course?.level === 'Nâng cao' ? 'selected' : ''}>Nâng cao</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="course-instructor" class="form-label">Giảng viên</label>
+            <input type="text" id="course-instructor" class="form-input" value="${Utils.escapeHtml(course?.instructor || '')}">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label for="course-duration" class="form-label">Thời lượng</label>
+              <input type="text" id="course-duration" class="form-input" value="${Utils.escapeHtml(course?.duration || '')}" placeholder="Ví dụ: 20 giờ">
+            </div>
+            <div class="form-group">
+              <label for="course-sponsor" class="form-label">Nhà tài trợ</label>
+              <select id="course-sponsor" class="form-input">
+                <option value="">Chọn nhà tài trợ</option>
+                ${sponsors.map(s => `<option value="${s.id}" ${course?.sponsorId === s.id ? 'selected' : ''}>${Utils.escapeHtml(s.name)}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label for="course-price" class="form-label">Giá (VNĐ)</label>
+              <input type="number" id="course-price" class="form-input" value="${course?.price || 0}" min="0" step="1000">
+            </div>
+            <div class="form-group">
+              <label for="course-original-price" class="form-label">Giá gốc (VNĐ)</label>
+              <input type="number" id="course-original-price" class="form-input" value="${course?.originalPrice || 0}" min="0" step="1000">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Loại</label>
+              <label class="flex items-center gap-8" style="cursor: pointer; font-weight: 400;">
+                <input type="checkbox" id="course-free" ${course?.isFree ? 'checked' : ''} style="width: 18px; height: 18px; accent-color: var(--primary-color);">
+                <span>Miễn phí</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="course-featured" class="form-label" style="display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="course-featured" ${course?.featured ? 'checked' : ''} style="width: 18px; height: 18px; accent-color: var(--primary-color);">
+              <span>Nổi bật</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="course-thumbnail" class="form-label">Ảnh đại diện (URL)</label>
+            <input type="url" id="course-thumbnail" class="form-input" value="${Utils.escapeHtml(course?.thumbnail || '')}" placeholder="assets/images/course-xxx.png">
+          </div>
+        </form>
+      `;
+
+      Utils.showModal(modalHtml, {
+        title: id ? 'Chỉnh sửa khóa học' : 'Thêm khóa học mới',
+        confirmText: id ? 'Cập nhật' : 'Tạo khóa học',
+        onConfirm: () => saveCourse(id)
+      });
+    }
+
+    function saveCourse(id) {
+      const title = Utils.getElement('#course-title').value.trim();
+      const description = Utils.getElement('#course-description').value.trim();
+      const category = Utils.getElement('#course-category').value.trim();
+      const level = Utils.getElement('#course-level').value;
+      const instructor = Utils.getElement('#course-instructor').value.trim();
+      const duration = Utils.getElement('#course-duration').value.trim();
+      const sponsorId = Utils.getElement('#course-sponsor').value || null;
+      const price = parseInt(Utils.getElement('#course-price').value) || 0;
+      const originalPrice = parseInt(Utils.getElement('#course-original-price').value) || price;
+      const isFree = Utils.getElement('#course-free').checked;
+      const featured = Utils.getElement('#course-featured').checked;
+      const thumbnail = Utils.getElement('#course-thumbnail').value.trim();
+
+      if (!title || !description || !category || !level) {
+        Utils.showToast('Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
+        return;
+      }
+
+      const courseData = {
+        title,
+        description,
+        category,
+        level,
+        instructor,
+        duration,
+        sponsorId,
+        price: isFree ? 0 : price,
+        originalPrice: isFree ? 0 : originalPrice,
+        isFree,
+        featured,
+        thumbnail: thumbnail || 'assets/images/course-placeholder.png',
+        lessons: [],
+        promotionIds: []
+      };
+
+      if (id) {
+        Storage.updateCourse(id, courseData);
+        Utils.showToast('Cập nhật khóa học thành công', 'success');
+      } else {
+        Storage.addCourse(courseData);
+        Utils.showToast('Tạo khóa học thành công', 'success');
+      }
+
+      renderCoursesTable();
+    }
+
+    function confirmDeleteCourse(id) {
+      Utils.showConfirm('Bạn có chắc muốn xóa khóa học này? Hành động không thể hoàn tác.', () => {
+        Storage.deleteCourse(id);
+        Utils.showToast('Đã xóa khóa học', 'success');
+        renderCoursesTable();
+      });
+    }
+
+    function openSponsorModal(id = null) {
+      const sponsor = id ? Storage.getSponsorById(id) : null;
+
+      const modalHtml = `
+        <form id="sponsor-form">
+          <input type="hidden" id="sponsor-id" value="${id || ''}">
+          <div class="form-group">
+            <label for="sponsor-name" class="form-label">Tên nhà tài trợ *</label>
+            <input type="text" id="sponsor-name" class="form-input" value="${Utils.escapeHtml(sponsor?.name || '')}" required>
+          </div>
+          <div class="form-group">
+            <label for="sponsor-logo" class="form-label">Logo (URL)</label>
+            <input type="url" id="sponsor-logo" class="form-input" value="${Utils.escapeHtml(sponsor?.logo || '')}" placeholder="assets/images/sponsor-xxx.svg">
+          </div>
+          <div class="form-group">
+            <label for="sponsor-description" class="form-label">Mô tả *</label>
+            <textarea id="sponsor-description" class="form-input" rows="3" required>${Utils.escapeHtml(sponsor?.description || '')}</textarea>
+          </div>
+        </form>
+      `;
+
+      Utils.showModal(modalHtml, {
+        title: id ? 'Chỉnh sửa nhà tài trợ' : 'Thêm nhà tài trợ mới',
+        confirmText: id ? 'Cập nhật' : 'Tạo nhà tài trợ',
+        onConfirm: () => saveSponsor(id)
+      });
+    }
+
+    function saveSponsor(id) {
+      const name = Utils.getElement('#sponsor-name').value.trim();
+      const logo = Utils.getElement('#sponsor-logo').value.trim();
+      const description = Utils.getElement('#sponsor-description').value.trim();
+
+      if (!name || !description) {
+        Utils.showToast('Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
+        return;
+      }
+
+      const sponsorData = { name, logo: logo || 'assets/images/sponsor-placeholder.svg', description };
+
+      if (id) {
+        Storage.updateSponsor(id, sponsorData);
+        Utils.showToast('Cập nhật nhà tài trợ thành công', 'success');
+      } else {
+        Storage.addSponsor(sponsorData);
+        Utils.showToast('Tạo nhà tài trợ thành công', 'success');
+      }
+
+      renderSponsorsTable();
+    }
+
+    function confirmDeleteSponsor(id) {
+      Utils.showConfirm('Bạn có chắc muốn xóa nhà tài trợ này? Các khóa học liên quan sẽ không còn nhà tài trợ.', () => {
+        Storage.deleteSponsor(id);
+        Utils.showToast('Đã xóa nhà tài trợ', 'success');
+        renderSponsorsTable();
+        renderCoursesTable();
+      });
+    }
+
+    function openPromotionModal(id = null) {
+      const promo = id ? Storage.getPromotionById(id) : null;
+      const courses = Storage.getCourses();
+
+      const modalHtml = `
+        <form id="promotion-form">
+          <input type="hidden" id="promotion-id" value="${id || ''}">
+          <div class="form-group">
+            <label for="promo-code" class="form-label">Mã chương trình *</label>
+            <input type="text" id="promo-code" class="form-input" value="${Utils.escapeHtml(promo?.code || '')}" required style="text-transform: uppercase;">
+          </div>
+          <div class="form-group">
+            <label for="promo-name" class="form-label">Tên chương trình *</label>
+            <input type="text" id="promo-name" class="form-input" value="${Utils.escapeHtml(promo?.name || '')}" required>
+          </div>
+          <div class="form-group">
+            <label for="promo-description" class="form-label">Mô tả</label>
+            <textarea id="promo-description" class="form-input" rows="2">${Utils.escapeHtml(promo?.description || '')}</textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label for="promo-type" class="form-label">Loại ưu đãi *</label>
+              <select id="promo-type" class="form-input" required>
+                <option value="percent" ${promo?.type === 'percent' ? 'selected' : ''}>Giảm theo %</option>
+                <option value="fixed" ${promo?.type === 'fixed' ? 'selected' : ''}>Giảm số tiền cố định</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="promo-value" class="form-label">Giá trị *</label>
+              <input type="number" id="promo-value" class="form-input" value="${promo?.value || 0}" min="1" required>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label for="promo-start" class="form-label">Ngày bắt đầu *</label>
+              <input type="date" id="promo-start" class="form-input" value="${promo?.startDate ? promo.startDate.split('T')[0] : ''}" required>
+            </div>
+            <div class="form-group">
+              <label for="promo-end" class="form-label">Ngày kết thúc *</label>
+              <input type="date" id="promo-end" class="form-input" value="${promo?.endDate ? promo.endDate.split('T')[0] : ''}" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Áp dụng cho khóa học</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">
+              ${courses.map(c => `
+                <label style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--bg-secondary); border-radius: var(--radius-sm); cursor: pointer; font-size: 13px;">
+                  <input type="checkbox" name="promo-courses" value="${c.id}" ${promo?.courseIds?.includes(c.id) ? 'checked' : ''} style="width: 16px; height: 16px; accent-color: var(--primary-color);">
+                  ${Utils.escapeHtml(c.title)}
+                </label>
+              `).join('')}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="display: flex; align-items: center; gap: 8px; font-weight: 400;">
+              <input type="checkbox" id="promo-active" ${promo?.active !== false ? 'checked' : ''} style="width: 18px; height: 18px; accent-color: var(--primary-color);">
+              <span>Kích hoạt chương trình</span>
+            </label>
+          </div>
+        </form>
+      `;
+
+      Utils.showModal(modalHtml, {
+        title: id ? 'Chỉnh sửa khuyến mãi' : 'Thêm khuyến mãi mới',
+        confirmText: id ? 'Cập nhật' : 'Tạo khuyến mãi',
+        onConfirm: () => savePromotion(id)
+      });
+    }
+
+    function savePromotion(id) {
+      const code = Utils.getElement('#promo-code').value.trim().toUpperCase();
+      const name = Utils.getElement('#promo-name').value.trim();
+      const description = Utils.getElement('#promo-description').value.trim();
+      const type = Utils.getElement('#promo-type').value;
+      const value = parseInt(Utils.getElement('#promo-value').value) || 0;
+      const startDate = Utils.getElement('#promo-start').value;
+      const endDate = Utils.getElement('#promo-end').value;
+      const active = Utils.getElement('#promo-active').checked;
+      const courseIds = Array.from(Utils.getElements('input[name="promo-courses"]:checked')).map(cb => cb.value);
+
+      if (!code || !name || !value || !startDate || !endDate) {
+        Utils.showToast('Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
+        return;
+      }
+
+      const promoData = { code, name, description, type, value, startDate, endDate, courseIds, active };
+
+      if (id) {
+        Storage.updatePromotion(id, promoData);
+        Utils.showToast('Cập nhật khuyến mãi thành công', 'success');
+      } else {
+        Storage.addPromotion(promoData);
+        Utils.showToast('Tạo khuyến mãi thành công', 'success');
+      }
+
+      renderPromotionsTable();
+    }
+
+    function confirmDeletePromotion(id) {
+      Utils.showConfirm('Bạn có chắc muốn xóa khuyến mãi này?', () => {
+        Storage.deletePromotion(id);
+        Utils.showToast('Đã xóa khuyến mãi', 'success');
+        renderPromotionsTable();
+      });
+    }
+
+    function updateRequestStatus(id, status) {
+      Storage.updateSponsorRequest(id, { status });
+      Utils.showToast(status === 'approved' ? 'Đã duyệt yêu cầu' : 'Đã từ chối yêu cầu', 'success');
+      renderRequestsTable();
+    }
+
+    function viewRequest(id) {
+      const request = Storage.getSponsorRequests().find(r => r.id === id);
+      if (!request) return;
+
+      Utils.showModal(`
+        <div>
+          <p><strong>Tổ chức:</strong> ${Utils.escapeHtml(request.orgName)}</p>
+          <p><strong>Người liên hệ:</strong> ${Utils.escapeHtml(request.contactName)}</p>
+          <p><strong>Email:</strong> ${Utils.escapeHtml(request.contactEmail)}</p>
+          <p><strong>Điện thoại:</strong> ${Utils.escapeHtml(request.contactPhone || 'Chưa cung cấp')}</p>
+          <p><strong>Loại hợp tác:</strong> ${request.requestType === 'sponsor' ? 'Tài trợ' : request.requestType === 'content_provider' ? 'Cung cấp nội dung' : request.requestType === 'promotion' ? 'Khuyến mãi' : 'Khác'}</p>
+          <p><strong>Ngày gửi:</strong> ${Utils.formatDateTime(request.createdAt)}</p>
+          <p><strong>Trạng thái:</strong> <span class="badge ${request.status === 'pending' ? 'badge-sale' : request.status === 'approved' ? 'badge-free' : 'badge-danger'}">${request.status === 'pending' ? 'Chờ duyệt' : request.status === 'approved' ? 'Đã duyệt' : 'Đã từ chối'}</span></p>
+          <hr style="margin: 16px 0;">
+          <p><strong>Nội dung:</strong></p>
+          <p style="white-space: pre-wrap; color: var(--text-secondary);">${Utils.escapeHtml(request.message)}</p>
+        </div>
+      `, {
+        title: 'Chi tiết yêu cầu',
+        confirmText: 'Đóng'
+      });
+    }
+  </script>
+</body>
+</html>

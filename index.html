@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Edupress - Nền tảng học tập trực tuyến hàng đầu Việt Nam. Hàng nghìn khóa học chất lượng từ các chuyên gia và tổ chức uy tín.">
+  <title>Edupress - Học tập trực tuyến chất lượng cao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <div id="header-placeholder"></div>
+
+  <main id="main-content" role="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-content">
+          <div>
+            <h1 id="hero-title" class="hero-title">Học bất cứ gì, ở bất cứ đâu</h1>
+            <p class="hero-subtitle">Khám phá hàng ngàn khóa học chất lượng từ các chuyên gia hàng đầu. Học theo nhịp độ
+              của bạn, trên mọi thiết bị.</p>
+            <div class="hero-actions flex gap-12">
+              <a href="courses.html" class="btn btn-primary btn-lg">Khám phá khóa học</a>
+              <a href="register.html" class="btn btn-outline btn-lg"
+                style="background: transparent; border-color: white; color: white;">Đăng ký miễn phí</a>
+            </div>
+          </div>
+          <div class="hero-image">
+            <svg width="200" height="150" viewBox="0 0 200 150" fill="none" aria-hidden="true" style="opacity: 0.3;">
+              <rect x="20" y="20" width="160" height="100" rx="8" stroke="currentColor" stroke-width="2" />
+              <circle cx="100" cy="70" r="20" stroke="currentColor" stroke-width="2" />
+              <path d="M100 50v40h30" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" aria-labelledby="features-title">
+      <div class="container">
+        <h2 id="features-title" class="section-title" style="text-align: center; margin-bottom: 8px;">Tại sao chọn
+          Edupress?</h2>
+        <p class="section-subtitle" style="text-align: center; max-width: 600px; margin: 0 auto 32px;">Chúng tôi cam kết
+          mang lại trải nghiệm học tập tốt nhất cho bạn</p>
+
+        <div class="features-grid">
+
+          <article class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">Nội dung chất lượng</h3>
+            <p class="feature-desc">Các khóa học được kiểm duyệt kỹ lưỡng từ các chuyên gia và tổ chức uy tín, cập nhật
+              liên tục theo xu hướng mới nhất.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3 class="feature-title">Học tập linh hoạt</h3>
+            <p class="feature-desc">Học bất cứ lúc nào, ở bất cứ đâu. Tiến độ học tập được lưu tự động, tiếp tục ngay từ
+              nơi bạn dừng lại.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">💰</div>
+            <h3 class="feature-title">Giá cả hợp lý</h3>
+            <p class="feature-desc">Nhiều khóa học miễn phí, giá ưu đãi hấp dẫn và chương trình khuyến mãi thường xuyên
+              cho học viên.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="featured-courses-title">
+      <div class="container">
+        <div class="flex-between" style="margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 id="featured-courses-title" class="section-title">Khóa học nổi bật</h2>
+            <p class="section-subtitle">Các khóa học được đánh giá cao và nhiều người quan tâm nhất</p>
+          </div>
+          <a href="courses.html" class="btn btn-outline" style="margin-top: auto;">Xem tất cả</a>
+        </div>
+        <div class="grid grid-4" id="featured-courses-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--bg-secondary);" aria-labelledby="free-courses-title">
+      <div class="container">
+        <div class="flex-between" style="margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 id="free-courses-title" class="section-title">Khóa học miễn phí</h2>
+            <p class="section-subtitle">Bắt đầu học ngay hôm nay mà không tốn chi phí</p>
+          </div>
+          <a href="courses.html?price=free" class="btn btn-outline" style="margin-top: auto;">Xem tất cả</a>
+        </div>
+        <div class="grid grid-4" id="free-courses-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sale-courses-title">
+      <div class="container">
+        <div class="flex-between" style="margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 id="sale-courses-title" class="section-title">Khóa học đang giảm giá</h2>
+            <p class="section-subtitle">Nắm bắt ưu đãi hấp dẫn, tiết kiệm chi phí học tập</p>
+          </div>
+          <a href="courses.html?promotion=on-sale" class="btn btn-outline" style="margin-top: auto;">Xem tất cả</a>
+        </div>
+        <div class="grid grid-4" id="sale-courses-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--bg-secondary);" aria-labelledby="sponsors-title">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 32px;">
+          <h2 id="sponsors-title" class="section-title">Nhà tài trợ & Đối tác</h2>
+          <p class="section-subtitle">Các tổ chức uy tín đồng hành cùng Edupress</p>
+        </div>
+        <div class="grid grid-4" id="sponsors-grid"></div>
+        <div style="text-align: center; margin-top: 32px;">
+          <a href="sponsors.html" class="btn btn-outline">Xem tất cả nhà tài trợ</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="about-title">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center; gap: 48px;">
+          <div>
+            <h2 id="about-title" class="section-title">Về Edupress</h2>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+              Edupress là nền tảng học tập trực tuyến được xây dựng với sứ mệnh लोक trình bài hóa kiến thức,
+              giúp bất kỳ ai cũng có thể tiếp cận giáo dục chất lượng cao với chi phí hợp lý.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+              Chúng tôi hợp tác với các chuyên gia, giảng viên và tổ chức giáo dục hàng đầu để mang đến
+              các khóa học thực tế, cập nhật và phù hợp với nhu cầu thị trường lao động hiện nay.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8;">
+              Dù bạn là sinh viên, người đi làm muốn nâng cao kỹ năng, hay đơn giản là người yêu thích học tập
+              trọn đời - Edupress luôn có một khóa học phù hợp cho bạn.
+            </p>
+          </div>
+          <div style="text-align: center;">
+            <svg width="100%" height="300" viewBox="0 0 500 300" fill="none" aria-hidden="true"
+              style="max-width: 500px;">
+              <rect width="500" height="300" rx="16" fill="var(--primary-light)" />
+              <text x="250" y="140" text-anchor="middle" font-family="Inter, sans-serif" font-size="24"
+                font-weight="600" fill="var(--primary-color)">Edupress Platform</text>
+              <text x="250" y="175" text-anchor="middle" font-family="Inter, sans-serif" font-size="14"
+                fill="var(--text-secondary)">Đang phát triển - Demo học tập</text>
+              <circle cx="250" cy="220" r="30" fill="var(--primary-color)" opacity="0.2" />
+              <path d="M250 205v30M235 220h30" stroke="var(--primary-color)" stroke-width="3" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section"
+      style="background: linear-gradient(135deg, var(--primary-color) 0%, #1e40af 100%); color: white;"
+      aria-labelledby="cta-title">
+      <div class="container" style="text-align: center;">
+        <h2 id="cta-title" style="font-size: 32px; font-weight: 700; margin-bottom: 16px;">Sẵn sàng bắt đầu hành trình
+          học tập?</h2>
+        <p
+          style="font-size: 18px; opacity: 0.9; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+          Tham gia ngay hôm nay để truy cập hàng ngàn khóa học chất lượng cao và nâng cao kỹ năng của bạn.
+        </p>
+        <a href="register.html" class="btn btn-lg"
+          style="background: white; color: var(--primary-color); font-size: 18px; padding: 16px 40px;">
+          Đăng ký miễn phí ngay
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/courses.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Utils.onReady(() => {
+      const featuredCourses = Courses.getFeaturedCourses(4);
+      const freeCourses = Courses.getFreeCourses(4);
+      const saleCourses = Courses.getOnSaleCourses(4);
+      const sponsors = Storage.getSponsors();
+
+      Courses.renderCourseCards(featuredCourses, '#featured-courses-grid');
+      Courses.renderCourseCards(freeCourses, '#free-courses-grid');
+      Courses.renderCourseCards(saleCourses, '#sale-courses-grid');
+
+      const sponsorsGrid = Utils.getElement('#sponsors-grid');
+      if (sponsorsGrid) {
+        sponsorsGrid.innerHTML = sponsors.map(sponsor => `
+          <article class="sponsor-card">
+            <img src="${Utils.escapeHtml(sponsor.logo)}" alt="${Utils.escapeHtml(sponsor.name)}" class="sponsor-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display: none; width: 100px; height: 100px; border-radius: var(--radius-md); background: var(--primary-light); color: var(--primary-color); align-items: center; justify-content: center; font-size: 32px; font-weight: 700; margin: 0 auto 16px;">${Utils.getInitials(sponsor.name)}</div>
+            <h3 class="sponsor-name">${Utils.escapeHtml(sponsor.name)}</h3>
+            <p class="sponsor-desc">${Utils.escapeHtml(sponsor.description)}</p>
+            <div class="sponsor-courses">
+              ${Storage.getCourses().filter(c => c.sponsorId === sponsor.id).slice(0, 3).map(c => `<span class="sponsor-course-tag">${Utils.escapeHtml(c.title)}</span>`).join('')}
+            </div>
+          </article>
+        `).join('');
+      }
+    });
+  </script>
+</body>
+
+</html>

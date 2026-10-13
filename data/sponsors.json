@@ -1,0 +1,26 @@
+[
+  {
+    "id": "sp01",
+    "name": "TechEdu Vietnam",
+    "logo": "assets/images/sponsor-techedu.svg",
+    "description": "Công ty giáo dục công nghệ, chuyên tài trợ các khóa học lập trình cho sinh viên."
+  },
+  {
+    "id": "sp02",
+    "name": "DesignHub",
+    "logo": "assets/images/sponsor-designhub.svg",
+    "description": "Cộng đồng thiết kế sáng tạo, cung cấp khóa học thiết kế đồ họa và UI/UX."
+  },
+  {
+    "id": "sp03",
+    "name": "BizAcademy",
+    "logo": "assets/images/sponsor-bizacademy.svg",
+    "description": "Học viện kinh doanh trực tuyến, tài trợ các khóa học kỹ năng kinh doanh và marketing."
+  },
+  {
+    "id": "sp04",
+    "name": "LangCenter",
+    "logo": "assets/images/sponsor-langcenter.svg",
+    "description": "Trung tâm ngoại ngữ, cung cấp khóa học tiếng Anh và tiếng Nhật chất lượng cao."
+  }
+]

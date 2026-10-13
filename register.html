@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Đăng ký tài khoản Edupress - Tạo tài khoản miễn phí để truy cập khóa học, theo dõi tiến độ và nhận ưu đãi.">
+  <title>Đăng ký - Edupress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <div id="header-placeholder"></div>
+
+  <main id="main-content" role="main">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div style="text-align: center; margin-bottom: 8px;">
+          <svg width="48" height="48" viewBox="0 0 32 32" fill="none" aria-hidden="true" style="color: var(--primary-color);">
+            <rect width="32" height="32" rx="8" fill="currentColor"/>
+            <path d="M8 12h16M8 16h12M8 20h8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h1 class="auth-title">Tạo tài khoản mới</h1>
+        <p class="auth-subtitle">Tham gia cộng đồng học tập Edupress ngay hôm nay</p>
+
+        <form id="register-form" class="auth-form" novalidate>
+          <div id="register-error" class="form-error" role="alert"></div>
+
+          <div class="form-group">
+            <label for="name" class="form-label">Họ và tên</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Nguyễn Văn An" required autocomplete="name" aria-describedby="register-error">
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email" aria-describedby="register-error">
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Mật khẩu</label>
+            <input type="password" id="password" name="password" class="form-input" placeholder="Ít nhất 6 ký tự" required autocomplete="new-password" minlength="6" aria-describedby="register-error password-hint">
+            <p id="password-hint" style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Mật khẩu phải có ít nhất 6 ký tự</p>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password" class="form-label">Xác nhận mật khẩu</label>
+            <input type="password" id="confirm-password" name="confirm-password" class="form-input" placeholder="Nhập lại mật khẩu" required autocomplete="new-password" aria-describedby="register-error">
+          </div>
+
+          <fieldset class="form-group">
+            <legend class="form-label">Chọn avatar</legend>
+            <input type="hidden" id="avatar-input" name="avatar" value="👤">
+            <div class="avatar-selector" role="radiogroup" aria-label="Chọn avatar đại diện">
+              <button type="button" class="avatar-option selected" data-avatar="👤" role="radio" aria-checked="true">👤</button>
+              <button type="button" class="avatar-option" data-avatar="👨‍🎓" role="radio" aria-checked="false">👨‍🎓</button>
+              <button type="button" class="avatar-option" data-avatar="👩‍🎓" role="radio" aria-checked="false">👩‍🎓</button>
+              <button type="button" class="avatar-option" data-avatar="🧑‍💻" role="radio" aria-checked="false">🧑‍💻</button>
+              <button type="button" class="avatar-option" data-avatar="🎨" role="radio" aria-checked="false">🎨</button>
+              <button type="button" class="avatar-option" data-avatar="📚" role="radio" aria-checked="false">📚</button>
+              <button type="button" class="avatar-option" data-avatar="🚀" role="radio" aria-checked="false">🚀</button>
+              <button type="button" class="avatar-option" data-avatar="⭐" role="radio" aria-checked="false">⭐</button>
+              <button type="button" class="avatar-option" data-avatar="💡" role="radio" aria-checked="false">💡</button>
+              <button type="button" class="avatar-option" data-avatar="🌟" role="radio" aria-checked="false">🌟</button>
+              <button type="button" class="avatar-option" data-avatar="🎯" role="radio" aria-checked="false">🎯</button>
+              <button type="button" class="avatar-option" data-avatar="🔥" role="radio" aria-checked="false">🔥</button>
+            </div>
+          </fieldset>
+
+          <div class="form-group">
+            <label class="flex items-center gap-8" style="cursor: pointer; font-weight: 400; font-size: 14px;">
+              <input type="checkbox" id="terms" name="terms" required style="width: 18px; height: 18px; accent-color: var(--primary-color);">
+              <span>Tôi đồng ý với <a href="#" style="color: var(--primary-color);">Điều khoản sử dụng</a> và <a href="#" style="color: var(--primary-color);">Chính sách bảo mật</a></span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">Tạo tài khoản</button>
+        </form>
+
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color); text-align: center;">
+          <p style="color: var(--text-secondary);">Hoặc đăng ký với</p>
+          <div class="flex gap-12" style="margin-top: 16px; justify-content: center;">
+            <button class="btn btn-outline" style="width: 100%;" disabled>Google</button>
+            <button class="btn btn-outline" style="width: 100%;" disabled>Facebook</button>
+          </div>
+        </div>
+
+        <p class="auth-footer" style="margin-top: 24px;">
+          Đã có tài khoản? <a href="login.html?redirect=${Utils.getQueryParam('redirect') || ''}">Đăng nhập ngay</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Utils.onReady(() => {
+      const redirect = Utils.getQueryParam('redirect');
+      if (redirect) {
+        const form = Utils.getElement('#register-form');
+        if (form) {
+          const hiddenInput = document.createElement('input');
+          hiddenInput.type = 'hidden';
+          hiddenInput.name = 'redirect';
+          hiddenInput.value = redirect;
+          form.appendChild(hiddenInput);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
